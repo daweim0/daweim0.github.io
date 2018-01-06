@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<!-- Mirrored from www.davidonbuildingthings.com/tricopter.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 06 Jan 2018 21:44:01 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel='stylesheet' href='styles/site.css' media='all' type='text/css' />
+<title>David on Building Things: Tricopter</title>
+</head>
+<body>
+<div id="outer-wrapper">
+<div id="header">
+	<h1><a class="toclink" href="home.html">David on Building Things</a></h1>
+	<h2>Adventures in software, electronics, mechanics</h2>
+</div>
+<div id="nav">
+	<ul id="top-links">
+		<li><a href="home.html">Projects</a></li>
+		<li><a href="about.html">About</a></li>
+		<li><a href="contact.html">Contact</a></li>
+	</ul>
+</div>
+<div id="main-body">
+<div id="projectpage-title"> 
+	<h1>Tricopter with custom Arduino-based software navigation controller</h1>
+	<div class="meta">
+		Just for fun (10th grade)
+	</div>
+	<div class="tags">
+		<ul>
+			<li>Tags:</li>
+			<li>tricopter</li>
+			<li>multi-rotor control</li>
+			<li>Arduino</li>
+			<li>Raspberry Pi</li>
+			<li>Java</li>
+			<li>inertial measurement unit (IMU)</li>
+			<li>servos</li>
+			<li>PWM</li>
+			<li>networking</li>
+			<li>video</li>
+		</ul>
+	</div>
+</div>
+<img class="diagram" style="width: 600px;" src="img/test-flight.jpg" />
+<p class="image-caption">
+The tricopter hovering in a test flight.
+</p>
+<h2 id="toplevel-architecture">Top-level Architecture</h2>
+<p class="body-copy">
+As a tricopter, it's a triangular frame with a motor and propeller on each corner.
+The rear motor is attached to a servo which angles it for steering.
+Control electronics receive signals from an RC transmitter and determine speed and steering settings for
+the motors and servo.  An on-board camera sends video via wifi.
+</p>
+<img class="diagram" style="width: 600px;" src="img/top-level-schematic.png" />
+<h2>Test Flight</h2>
+<iframe width="420" height="315" src="http://www.youtube.com/embed/LFYkV3EVcR8?rel=0" frameborder="0" allowfullscreen></iframe>
+<h2 id="control-architecture">Control Architecture</h2>
+<p class="body-copy">
+The control electronics is essentially model airplane control electronics with an
+<a href="http://www.amazon.com/SainSmart-Board-Arduino-Robot-Duemilanove/dp/B00761NDCI">Arduino</a>
+inserted in the middle to manage speed and steering.  Custom software on the on-board
+Arduino controls the 3 <a href="http://www.hobbyking.com/hobbyking/store/uh_viewItem.asp?idProduct=6247">motors</a>
+along with the <a href="http://www.hobbyking.com/hobbyking/store/uh_viewItem.asp?idProduct=20571">servo</a>
+angling the rear motor.  A <a href="http://www.amazon.com/gp/product/B00E1GGE40">video camera</a> sends back video through an on-board Raspberry Pi in a separate system.
+</p>
+<img class="diagram" style="width: 600px;" src="img/schematic.png" /></body>
+<p class="body-copy">
+The <a href="http://www.hobbyking.com/hobbyking/store/uh_viewItem.asp?idProduct=9042">radio receiver</a>
+receives signals from the transmitter and outputs PWM signals to the Arduino.
+The Arduino performs navigation calculations and outputs PWM control signals to the
+<a href="http://www.hobbyking.com/hobbyking/store/uh_viewItem.asp?idProduct=4312">speed controllers</a>
+and <a href="http://www.hobbyking.com/hobbyking/store/uh_viewItem.asp?idProduct=20571">servo</a>.
+Note that on model airplanes the radio receiver connects directly to the speed controllers, communicating via PWM;
+here the Arduino is interposed in the middle but uses the same interfaces and so is transparent to the other devices
+although it's controlling them.
+</p>
+<p class="body-copy">
+An <a href="https://www.sparkfun.com/products/10736">inertial measurement unit (IMU)</a> provides the rig's
+current orientation for use in its navigation calculations.</p>
+<p class="body-copy">
+An on-board video camera streams back video through a Raspberry Pi.
+The Pi has a <a href="http://www.amazon.com/gp/product/B00C5PJHNY">USB wifi antenna</a> attached.
+</p>
+<h2 id="design-approaches">Design approaches and tradeoffs</h2>
+<h3 class="design-approach-heading">
+1.	Tricopter vs Quadcopter
+</h3>
+<p class="body-copy design-approach">
+The initial decision was how many rotors to have.  Quadcopters are most common, but I chose to do a tricopter.
+My expectation was that the control software would be simpler than for a quadcopter.
+As it turns out, it was a little simpler, but less than I thought because the hard part is stabilization
+and that's pretty much the same.
+</p>
+<p class="body-copy design-approach">
+Also a tricopter has fewer motors, but the mechanics are more complicated since one motor has to
+swivel to steer it; with a quadcopter you just adjust the speed of the motors to steer.
+</p>
+<p class="body-copy design-approach">
+In the end, if you're going to design and build one, I would recommend a quadcopter rather than a tricopter.
+They are simpler and more common, which equates to a larger community of people talking about them and
+sharing design experience.
+</p>
+<h3 class="design-approach-heading">
+2.	Orientation Sensors
+</h3>
+<p class="body-copy design-approach">
+By far the hardest design challenge is how to determine the frame's orientation.
+Unlike a model airplane where the human operator acts as the control system, directly controlling
+the motor speeds and control surfaces through the handheld transmitter, in a multi-rotor copter it's
+too complicated and there needs to be on-board control software.  But to operate, that control software
+needs to know the real-time orientation of the frame - in short, which way is down relative to the plane of the frame.
+</p>
+<p class="body-copy design-approach">
+I started off using an accelerometer, which measures acceleration in all 3 dimensions.
+They're very cheap and easy to interface with.  Since gravity is read as a continuous acceleration
+(yes it reports gravity as a ~10 newton downward acceleration) it could be used to determine "down".
+But it proved difficult to work with since it picked up vibrations from the motors thru the chassis too easily.
+Basically there was too much noise in the measurements due to the vibrations.
+While the noise probably could be removed with a low-pass filter, I didn't get to that.
+Couldn't they be averaged out?  In theory yes, but it wasn't responsive enough - there was too much lag,
+wasn't that accurate, and the vibration-induced noise didn't seem to be entirely random.
+</p>
+<p class="body-copy design-approach">
+So then I went to an <a href="https://www.sparkfun.com/products/10736">Inertial Measurement Unit (IMU)</a>, which is a more sophisticated device that
+combines an accelerometer, gyro, and magnometer.  It integrates all those into a single output providing orientation.
+Stand-alone tests are working very well.  Getting readable data from this was a challenge - it outputs either
+(a) ascii output or (b) an non-delimited stream of non-stop floats.  You don't know how long ascii numbers are.
+But it turns out there's a standard Arduino "text finder" library which is very similar to the java scanner class,
+and works great for this.  You tell it to find a character in the stream and then it lets you read data types
+from there (floats are represented in ascii).
+</p>
+<p class="body-copy design-approach">
+Even with IMU vibrations might be a problem, so I mounted them on <a href="http://www.amazon.com/gp/product/B00FJSA2Y2">vibration dampeners</a>.
+These dampeners are designed for avionics and cameras mounted on UAVs.
+Their orientation is a bit of a compromise.  The vibrations are primarily side-to-side due to the
+motor armature rotation but these dampeners are designed to dampen vertical (compressive) vibrations,
+not horizontal (shear) vibrations.  So optimally they'd be mounted horizontally,
+but they also need to support the weight of the electronics platform and they won't support weight that way,
+so I printed out pieces to incorporate them at 45 degree angles.  In a weightless environment,
+they'd be perfect horizontally.
+</p>
+<h3 class="design-approach-heading">
+3.	The video stream
+</h3>
+<p class="body-copy design-approach">
+Getting the video stream is actually pretty easy.  I put a combination of a Raspberry Pi and a
+<a href="http://www.amazon.com/gp/product/B00E1GGE40">RPI camera</a> on-board.
+The camera is manufactured by the pi foundation and interfaces quite easily.
+A <a href="http://www.amazon.com/gp/product/B00C5PJHNY">USB antenna</a> provides wifi connectivity and connects to an ad-hoc network created by the laptop.
+The main drawback to this approach is that the solution is finicky, and if signal is lost it cannot be
+regained without direct interaction. In this way it is inferior to the more standard analog systems which
+do not require handshaking and therefore automatically regain signal when it is available. With the current
+system losing the video stream would be disastrous without a line of sight.
+</p>
+<h3 class="design-approach-heading">
+4.	Power supply
+</h3>
+<p class="body-copy design-approach">
+Power is provided by on-board <a href="http://www.hobbyking.com/hobbyking/store/uh_viewItem.asp?idProduct=26453">11v 1.5ah lithium-polymer battery</a>.  That's fed into the <a href="http://www.hobbyking.com/hobbyking/store/uh_viewItem.asp?idProduct=4312">speed controllers</a> and they provide a 5 volt output that's used to power the Arduino and the receiver.  The servo requires 7 volts so that has a separate regulator connected to the battery.  The Pi also requires 5 volts but the 5v speed controller output isn't strong enough for it, so it has its own regulator connected to the battery.  You might think using a regulator, which drops the voltage via resistance and therefore consumes power, as wasteful, but it's all dwarfed by the motors' power consumption, and more efficient sources are typically heavier.
+</p>
+<h3 class="design-approach-heading">
+5.	Lift power
+</h3>
+<p class="body-copy design-approach">
+The particular combination of
+<a href="http://www.hobbyking.com/hobbyking/store/uh_viewItem.asp?idProduct=6247">motors</a> and
+<a href="http://www.hobbyking.com/hobbyking/store/uh_viewItem.asp?idProduct=22451">propellers</a>
+turns out to make the rig highly overpowered.  While this will be nice once it starts working, it is sub-optimal during testing.  It's gone in the blink of an eye.  In fact in tethered testing, one motor mount snapped off when the tether stopped it about a foot off the ground - the motor was providing that much force!
+</p>
+<h3 class="design-approach-heading">
+6.	Frame composition
+</h3>
+<p class="body-copy design-approach">
+Originally I used 3D-printed frame which was nice due to the customizability of it, but was very fragile and broke during testing. I then built a frame using wooden dowels for the support and a few 3d printed parts. While this has worked well during testing, I might move to a fully wooden frame later.  While 3d printers are a great tool, they are not suited to situations where materials are pushed to the extremes in terms of strength and weight. If my printer could print ABS as well as PLA I might think re-evaluate my choice, but Ultimakers don't have heated beds.
+</p>
+</div> <!-- main-body -->
+</div> <!-- outer-wrapper -->
+</body>
+
+<!-- Mirrored from www.davidonbuildingthings.com/tricopter.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 06 Jan 2018 21:44:01 GMT -->
+</html>
+
+

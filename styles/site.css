@@ -1,0 +1,218 @@
+
+body {
+    background: url("../img/pre-grid.png") repeat scroll 0 0 #F1F1F1;
+	color: #333333;
+}
+h1 {
+	color: #444444;
+}
+h2 {
+	color: #444444;
+	display: block;
+    font: bold 20px "Lucida Grande","Lucida Sans Unicode","DejaVu Sans",Lucida,Arial,Helvetica,sans-serif !important;
+    text-decoration: none;
+    text-shadow: 1px 1px 0 #EEEEEE, 2px 2px 0 #CCCCCC;
+}
+p {
+}
+img {
+	max-width: 600px;
+}
+.clear {
+	clear: both;
+}
+a {
+	color: inherit;
+}
+a:visited {
+	text-decoration: none;
+	color: #000000;
+}
+a:hover {
+	text-decoration: underline;
+}
+#outer-wrapper {
+	background-color: #FFFFFF;
+    border: 1px solid #AAAAAA;
+    border-radius: 3px;
+    box-shadow: 0 0 0 4px #FFFFFF, 2px 1px 6px 4px rgba(10, 10, 0, 0.5);
+    font: 12px Verdana,Geneva,sans-serif;
+    margin: 2em auto;
+    padding: 0;
+    text-align: left;
+    max-width: 900px;
+}
+#header {
+	display: block;
+	background-color: #F1F1F1;
+	border-bottom: 1px solid #AAAAAA;
+}
+#header h1 {
+	xcolor: #444444;
+    font-family: 'Helvetica Neue Light',HelveticaNeue-Light,'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-size: 40px;
+    padding: 20px 0 0 30px;
+	Margin: 0;
+	}
+#header h2 {
+	color: #444444;
+    font-family: "Lucida Sans Unicode","Lucida Grande",sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    line-height: 1.4em;
+    margin: 0 0 20px 30px;
+}
+#nav {
+	border-bottom: 1px solid #AAAAAA;
+    font: 14px Impact,Arial,Sans-Serif;
+    text-transform: uppercase;
+}
+#top-links {
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.1);
+    list-style: none outside none;
+    margin: 0;
+    overflow: auto;
+    padding: 0;
+}
+#top-links li {
+	display: inline;
+    float: left;
+}
+#top-links li a {
+	font-family: 'Helvetica Neue Light',HelveticaNeue-Light,'Helvetica Neue',Helvetica,Arial,sans-serif;
+	color: #666666;
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    text-shadow: 0 1px 1px #666666;
+    outline: medium none;
+    transition: color 0.3s ease 0s;
+}
+#top-links li a:hover {
+	background: none repeat scroll 0 0 #AAAAAA;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+#top-links li a:focus {
+}
+#main-body {
+	margin: 0 20px 0 30px;
+}
+#intro {
+	margin: 20px 0;
+	font-size: 13px;
+	}
+.tocentry {
+	xmargin-left: 20px;
+	clear: both;
+}
+.tocentry h2, #projectpage-title h1, .tocentry h2 a {
+	color: #006E88;
+	display: block;
+    font: bold 24px "Lucida Grande","Lucida Sans Unicode","DejaVu Sans",Lucida,Arial,Helvetica,sans-serif;
+    text-decoration: none;
+    text-shadow: 1px 1px 0 #EEEEEE, 2px 2px 0 #CCCCCC;
+	margin: 5px 0 0 0;
+}
+.tocentry .meta, #projectpage-title .meta {
+    xcolor: #444444;
+	color: #006E88;
+    font: italic bold 13px 'trebuchet MS',georgia,serif;
+    margin-bottom: 5px;
+/*    border-bottom: 5px solid #EEE;
+    padding: 0px 0px 5px;
+    transition: all 0.4s ease-out 0s;
+*/
+}
+/* .tocentry .meta:hover {
+	border-color: transparent transparent #009EB8;
+	transition-duration: 0s;
+}
+*/
+.tags {
+	font: bold 13px 'trebuchet MS',georgia,serif;
+	margin-top: 0px;
+}
+.tags ul {
+	xlist-style: none outside none;
+    display: inline;
+}
+.tags li {
+	display: inline;
+    float: left;
+	margin: 0 10px 0 0;
+	xcolor: #000080;
+}
+.tocentry .divider {
+	background-color: #009EB8;
+	height: 5px;
+	width: 100%;
+	border: none;
+	margin-top: 10px;
+	clear: both;
+}
+.tocentry-img {
+	display: block;
+    	float: left;
+	width: 400px;
+	clear: both;
+}
+.tocentry-img img, .tocentry-img a img {
+	margin: 10px 0 0 0;
+}
+.tocentry-outline {
+	display: block;
+	width: 280px;
+	display: block;
+    	float: left;
+	margin: 20px 0 0 30px;
+	font-size: 14px;
+}
+.tocentry-outline.wider {
+	width: 400px;
+}
+.tocentry-outline .list-hdr {
+	font-size: 18px;
+}
+.tocentry-outline li {
+	margin-top: 10px;
+}
+.tocentry-outline li a {
+	text-decoration: none;
+}
+/*#projectpage-title .meta {
+	font: italic bold 13px 'trebuchet MS',georgia,serif;
+	margin-bottom: 5px;
+}
+#projectpage-title h1 {
+	margin-bottom: 5px;
+}
+*/
+.image-caption {
+	font-style: italic;
+	xcolor: #333;
+	margin-top: 5px;
+}
+.paper-link {
+	color: #000062 !important;
+	margin-top: 15px;
+	text-decoration: none;
+}
+.diagram {
+	margin: 10px 0 10px 0;
+}
+.design-approach-heading {
+	xcolor: darkgreen;
+}
+.design-approach {
+}
+.todo {
+	color: red;
+	font-style: italic;
+}
+.toclink {
+	text-decoration: none;
+}
+a.toclink:hover {
+	text-decoration: none;
+}
