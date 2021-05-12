@@ -26,177 +26,42 @@
 <div id="projectpage-title"> 
 	<h1>Computer-controlled Robotic Arm</h1>
 	<div class="meta">
-		2013 Science Olympiad (9th grade)
-	</div>
-	<div class="tags">
-		<ul>
-			<li>Tags:</li>
-			<li>Java</li>
-			<li>Python</li>
-			<li>Raspberry Pi</li>
-			<li>networking</li>
-			<li>servos</li>
-			<li>I2C</li>
-			<li>PWM</li>
-		</ul>
+		2018-2020
 	</div>
 </div>
 <p class="body-copy">
-This was a timed event in the 2013 Science Olympiad.  Each robotic arm had 3 minutes to pick up items and deposit them in bins.
-User control is through a laptop's mouse and keyboard.  Those instructions are transmitted to a Raspberry Pi,
-which in turns drives servo controllers.  Moving the mouse controls lateral motion of the arm, while keystrokes control up/down, open/close, etc.
-Composite actions such as pickup-move-deposit are pre-programmed as keystrokes.
+I was heavily involved with RPI's premier robotics team, the Rock Raiders. I primairly worked on a software companion simulator, localization, vision, and hardware device integration (sensors, motor drivers). I also did electrical and mechanical work here-and-there.
+
 </p>
-<img class="diagram" style="height: 600px;" src="img/robotic-arm1-small.jpg" />
-<p class="image-caption">
-The robotic arm, along with the laptop and mouse used to control it.  The Raspberry Pi and servo control electronics are on the board.
+
+<img class="diagram" style="height: 600px;" src="img/IGVC_3.jpg" />
+<p class="image-caption" style="width:150%">
+	Waiting for our turn to compete. The wood box is a 30lb weight robots are required to carry around while competing.
 </p>
-<img class="diagram" style="width: 600px;" src="img/testing-the-robotic-arm2-small.jpg" />
-<p class="image-caption">
-Testing the robotic arm.  Note the nails and pens arrayed around it as pick-up items and the cut-off milk cartons as the drop bins.
-Control is through the mouse and keyboard, but once the claw was positioned above an object, software took over and picked up the object and dropped it into the target bin.
+
+<img class="diagram" style="height: 600px;" src="img/IGVC_2.jpg" />
+<p class="image-caption" style="width:150%">
+	The rear of the robot. Not too much going on.
 </p>
-<h2>Science Olympiad Competition</h2>
-<iframe width="420" height="315" src="http://www.youtube.com/embed/dvHvNsM12zQ?rel=0" frameborder="0" allowfullscreen></iframe>
-<h2 id="mechanical-architecture">Mechanical Architecture</h2>
-<p class="body-copy">
-The arm consists of computer-controlled servos at each joint connecting the arm segments and claw.
-Initially I printed the arms with a Makerbot printer, but found the plastic too brittle, so I replaced them with
-<a href="http://www.lynxmotion.com/c-73-servo-erector-set.aspx">pre-fab brackets and arms</a>.
+
+<iframe width="850px" height="500px" src="https://www.youtube.com/embed/YtcAZcXqe28" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p class="image-caption" style="width:150%">
+	It started raining, so we did a speedy waterproofing. Rockie was driving autonomously in this video.
 </p>
-<p class="body-copy">
-There are 5 servo-operated joints:
+
+
+<img class="diagram" style="height: 600px;" src="img/IGVC_6.jpg" />
+<p class="image-caption" style="width:150%">
+	A competition run. A judge is holding the wireless emergency stop in the brackground.
 </p>
-<ul class="body-copy">
-<li><a href="http://www.lynxmotion.com/p-293-hs-645mg-133-oz-in-standard-servo.aspx">Base</a> - rotate</li>
-<li><a href="http://www.servocity.com/html/hs-805bb_mega_power.html#.Uzcu-4Ua7JI">Shoulder</a> - extension</li>
-<li><a href="http://www.servocity.com/html/hs-805bb_mega_power.html#.Uzcu-4Ua7JI">elbow</a> - extension</li>
-<li><a href="http://www.lynxmotion.com/p-293-hs-645mg-133-oz-in-standard-servo.aspx">wrist</a> - rotate</li>
-<li><a href="http://www.lynxmotion.com/p-826-a-style-gripper.aspx">claw</a> - open and close</li>
-</ul>
-<img class="diagram" style="width: 600px;" src="img/mechanical-schematic-small.png" />
-<h2 id="control-architecture">Control Architecture</h2>
-<p class="body-copy">
-User control is through a laptop's mouse and keyboard.  Those instructions are transmitted to a Raspberry Pi, which in turns drives servo controllers.  Moving the mouse controls lateral motion of the arm, while keystrokes control up/down, open/close, etc.  Composite actions such as pickup-move-deposit are pre-programmed as keystrokes.
+
+
+<iframe  width="850px" height="500px" src="https://www.youtube.com/embed/QYBDp5VMtuA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p class="image-caption" style="width:100%">
+	An earlier incarnation of Rockie, before we switched from URC to IGVC. Note the arm and rocker suspension, both of which were not needed for IGVC. This driving was under remote control, autonomoy wasn't functional on hardware yet.
 </p>
-<p class="body-copy">
-The control architecture is the core of the project.  There are three levels:
-</p>
-<ol class="body-copy">
-<li>User Control - the laptop and mouse</li>
-<li>Program control of the servos - the Raspberry Pi</li>
-<li>Electrical control of the servos - the servo control board</li>
-</ol>
-<img class="diagram" style="width: 600px;" src="img/robotic-arm-control-schematic.png" />
-<h3>User Control</h3>
-<p class="body-copy">
-The user controls operation with the mouse and keyboard:
-</p>
-<ul class="body-copy">
-<li>Moving the mouse directly moves the claw in the X-Y plane - it tracks the mouse movements.</li>
-<li>Up/down and open/close are controlled through keystrokes.</li>
-<li>Pick up-move-deposit - this is a single programmed sequence in which an object (e.g. a pencil) is picked up by the claw, moved into position over a drop container, and dropped into the container.  This is initiated by a keystroke once the claw is positioned over the object.</li>
-</ul>
-<p class="body-copy">
-The UI is controlled by a Java program running on the laptop, fielding the mouse movements and keystrokes.
-</p>
-<h3>Program Control</h3>
-<p class="body-copy">
-The servos are controlled by a Raspberry Pi.  A Python program on the Pi accepts commands from the laptop converts
-those commands into the desired servo controls.  It then controls the servos through a servo control board,
-which it communicates with simple I2C networking.  The servo control board then directly drives the servos with a standard PWM i/f.
-</p>
-<p class="body-copy">
-Originally the Java program on the laptop used SSH to drop files on the the Raspberry Pi as a mean for communicating with the Python program.
-This turned out to be too slow, so I changed this use an ethernet to talk to a Java program on the Pi that then uses Linux pipes to directly
-send commands to the Python program. The Python program accepts these commands and issues them through a
-<a href="https://github.com/adafruit/Adafruit-PWM-Servo-Driver-Library">servo-control library</a> to issue
-directives to the servo control board.
-<h3>Electrical Control</h3>
-<p class="body-copy">
-The five servos are all controlled directly from the servo control board <need name/link> using the standard PWM i/f.  The Pi communicates with the servo control board using simple I2C networking.
-</p>
-<h2 id="operation">Operation</h2>
-<p class="body-copy">
-The X-Y position of the arm was controlled by moving the mouse.  The claw tracked the mouse position, as shown in the video.
-</p>
-<p class="body-copy">
-Z movements and claw operation were controlled via the keyboard and mouse buttons:
-<ul>
-<li>r - home position</li>
-<li>left / right mouse buttons - open and close the claw</li>
-<li>scroll wheel - up and down</li>
-<li>Shift - switch the mouse from controlling the shoulder to controlling the wrist</li>
-<li>Ctrl - free the mouse</li>
-</ul>
-</p>
-<p class="body-copy">
-In addition, automated compound operations were also controlled by keystrokes.  At the time of the contest,
-the main one I had working was:
-<ul>
-<li>1, 2, 3,... - compound commands to move the claw to drop target 1, 2, etc and drop the load into it.</li>
-</ul>
-If the contest is repeated, I intend to fully automate it, initiating the entire operation with a single keystroke and having
-it all performed by the software with no further interaction on my part.  This is possible because the positions of the items and bins are known in advance.  Alternatively I may also add a vision capability so it's not dependent on the exact locations and will be more robust in the pickup.
-</p>
-<h2 id="design-decisions">Design decisions and tradeoffs</h2>
-<h3 class="design-approach-heading">
-1.	Software control rather than direct R/C control
-</h3>
-<p class="body-copy design-approach">
-The first major decision was to use software control rather than direct R/C control.  Other entrants in the event used direct RC-control for their robots - a hand-held controller talking directly to the motors (as if driving an RC car).  From online postings apparently others have also used software control, but we didn't see any at the event.
-</p>
-<p class="body-copy design-approach">
-There were a number of important tradeoffs with software control:
-</p>
-<ul class="body-copy">
-<li>
-The servo motors aren't as stable or powerful as direct electric motors.  This made the arm slower and required a little time for it to settle
-down after moving.  This of course negatively affected performance.
-</li>
-<li>
-Clearly this was a more complex architecture than direct R/C control and took more time to build.  And of course complexity means more points
-of failure.
-</li>
-<li>
-On the plus side, with the software control I was able to build higher-level automated operations.  In particular once I zero-ed
-on a object to be picked up, I would press a single key and it would pick up the object, move it over to one of the bins, and drop it.
-This composite operation was much faster than doing them by hand.  Ultimately the entire contest could be operated by a single keypress
-where the system takes off and automatically picks up all the items and deposits them in the highest-payoff bins.  But I didn't have time
-to fully develop that this year.
-</li>
-</ul>
-<h3 class="design-approach-heading">
-2.	Networking
-</h3>
-<p class="body-copy design-approach">
-The basic setup was a Java program on the laptop talking over ethernet to a Java program on the Pi.  Getting this networking working was surprisingly difficult.  It took a lot of time and I explored taking alternative routes such as using SSH to deposit files on the Pi that the Python program would read, instead of using the Java code as an intermediary.  In the end the problem was that they were trying to operate on different subnets.  Fixing it required getting the right network gateway settings (they both needed static IPs and the same gateway settings).  Once we figured that out it was easy.
-</p>
-<h3 class="design-approach-heading">
-3.	Python
-</h3>
-<p class="body-copy design-approach">
-I used a Python program to talk to the servo control board - there wasn't any fundamental reason to use Python here, but the control board's sample program was written in Python and it was fairly arcane so I didn't want to rewrite it in Java.  Initially I had the Java program communicate with the Python program by writing files, then converted it to direct communication via Linux pipes.
-</p>
-<h3 class="design-approach-heading">
-4.	Pi vs Arduino
-</h3>
-<p class="body-copy design-approach">
-I choose the Pi mainly because it runs Linux and seemed more interesting.  Arduino actually would have worked better because it's easier to access the GPIO (General Input/Output) pins, which are the pins that talk PWM.  Also the Pi only has one pin that talks PWM.  To work around that limitation, I incorporated a servo control board with 16 PWM pins, which communicates with the Pi via the I2C networking protocol.  The Pi communicated from the laptop over ethernet, Java program to Java program.  If it was an Arduino I would have used USB (there's a Java library for communicating with Arduinos over USB).  There was no real functional advantages to using the Pi over Arduino.  With my particular architecture using Arduino would have also skipped the Python program since the servo control board wouldn't have been needed and the Arduino would have directly communicated with the servos.
-</p>
-<h3 class="design-approach-heading">
-5.	Structural material
-</h3>
-<p class="body-copy design-approach">
-Originally I used wooden dowels for the arms and 3D-printed motor mounts but couldn't get strong enough joints, so then I went with a kit for the arms and joints.  Also the servos come with a horn as an attachment point, but I didn't want to put the entire weight/force of the arms on that and the kit came with a bearing and way to attach the arm to the other side of the servo (the kit was designed for those servos).  Also at the time I was printing from a Makerbot Thing-O-Matic and couldn't see how to adjust the fill density.  With my current Ultimaker there's a control for that, so printed pieces can be denser and stronger.
-</p>
-<h2 id="future-improvements">Future improvements</h2>
-<p class="body-copy">
-A big benefit of software control is the ability to program composite operations.  There's no reason the entire contest couldn't be run with a single button press, where the system then takes off and automatically picks up all the items and deposits them in the highest-payoff bins.  I think that would be a faster than even a practiced human operator could perform with an RC controller.
-</p>
-<p class="body-copy">
-Either in place of pre-programming the operations or to augment their operation, I'd like to incorporate computer vision next time so the system can automatically zero-in on the objects.
-</p>
+
+
 </div> <!-- main-body -->
 </div> <!-- outer-wrapper -->
 </body>
