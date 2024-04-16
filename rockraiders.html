@@ -1,8 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
-<!-- Mirrored from www.davidonbuildingthings.com/roboticarm.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 06 Jan 2018 21:42:59 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel='stylesheet' href='styles/site.css' media='all' type='text/css' />
@@ -24,13 +23,22 @@
 </div>
 <div id="main-body">
 <div id="projectpage-title"> 
-	<h1>Autonomous robots</h1>
+	<h1>Autonomous Robot</h1>
 	<div class="meta">
 		2018-2020
 	</div>
 </div>
 <p class="body-copy">
-I was heavily involved with RPI's premier robotics team, the Rock Raiders. I primairly worked on a software companion simulator, localization, vision, and hardware device integration (sensors, motor drivers). I also did electrical and mechanical work here-and-there.
+I was heavily involved with RPI's premier robotics team, the Rock Raiders. I primairly worked on the robot software, which included:
+<ol>
+<li> A companion simulator. I wrote it to present the same APIs as our ROS device drivers, so it was a drop-in replacement for the robot hardware. It was incredibly usefulf when debugging our localization and navigation stack </li>
+<li> Localization. I worked on our sensor fusion strategy, so deciding which sensors are fused into which coordinate frames, and how they were fed into our path planner and obstacle map. GPS was a lot less useful than I thought it would be</li> 
+<li> Vision. <a href="url">IGVC</a> required driving within painted white lanes on a grassy field. I worked extensively on our lane detector </li>
+<li> Hardware integration. This was mostly writing ROS nodes to communicate with sensors and motor drivers </li>
+<li> Fixing random problems. For example, I found a bug in the firmware of our motor drivers where they would only output half power (it was very weird) </li>
+</ol>
+
+I also did electrical and mechanical work here-and-there. 
 
 </p>
 
@@ -58,7 +66,7 @@ I was heavily involved with RPI's premier robotics team, the Rock Raiders. I pri
 
 <iframe width="850px" height="500px" src="https://www.youtube.com/embed/4cszSA_DpBU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 <p class="image-caption" style="width:100%">
-	An early test of autonomously driving to a GPS coordinate. It looks like the local planner probably needed tuning.
+	An early test of autonomously driving to a GPS coordinate. It looks like the local planner needed tuning.
 </p>
 
 
